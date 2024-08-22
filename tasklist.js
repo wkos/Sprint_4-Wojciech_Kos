@@ -7,17 +7,12 @@ const addTaskButton = document.getElementById("addTask");
 addTaskButton.addEventListener("click", createTask);
 const taskInput = document.getElementById("taskTitle");
 
-function createButton(
-  buttonClass,
-  textOnButton,
-  elementHTML,
-  handlingFunction
-) {
+function createButton(buttonClass, textOnButton, handlingFunction) {
   const newButton = document.createElement("button");
   newButton.className = buttonClass;
   newButton.textContent = textOnButton;
-  elementHTML.appendChild(newButton);
   newButton.addEventListener("click", handlingFunction);
+  return newButton;
 }
 
 function createTask() {
@@ -26,8 +21,10 @@ function createTask() {
     newTask.textContent = taskInput.value;
     taskList.appendChild(newTask);
 
-    createButton("button", "Edytuj", newTask, handleEditTask);
-    createButton("button", "Usuń zadanie", newTask, removeTask);
+    const btnEdit = createButton("button", "Edytuj", handleEditTask);
+    newTask.appendChild(btnEdit);
+    const btnDelete = createButton("button", "Usuń zadanie", removeTask);
+    newTask.appendChild(btnDelete);
 
     taskInput.value = "";
   } else {
